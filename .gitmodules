@@ -1,0 +1,3 @@
+[submodule "TensorFlow-Tutorials"]
+	path = TensorFlow-Tutorials
+	url = https://github.com/nlintz/TensorFlow-Tutorials.git
