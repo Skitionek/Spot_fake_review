@@ -3,4 +3,4 @@ Comprehensive work on spotting fake reviews, using linguistic and behavioral fea
 
 # Tip 
 To start make and populate ``data`` folder.
-Then run ``ipython notebook`` to start.
+Then run ``ipython notebook``.
