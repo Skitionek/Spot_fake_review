@@ -3,4 +3,4 @@ Comprehensive work on spotting fake reviews, using linguistic and behavioral fea
 
 # Tip 
 run 
-``ipython notebook to start``
+``ipython notebook`` to start.
