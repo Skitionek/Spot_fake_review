@@ -10,7 +10,7 @@ import sys
 
 
 def getDir(dirname, mode):
-    return "../Data/Extracted_features/{0}/{1}.npy".format(dirname, mode)
+    return "./Data/Extracted_features/{0}/{1}.npy".format(dirname, mode)
 
 
 def load(mode):
