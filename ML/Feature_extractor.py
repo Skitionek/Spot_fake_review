@@ -4,6 +4,7 @@ import csv
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 import itertools
+import numpy as np
 
 '''
 Created on May 25, 2017
@@ -53,12 +54,10 @@ class Feature_extractor(object):
         self.print_X()
         
     def save(self, fileName):
-        with open('../Data/Extracted_features/'+fileName, 'wb') as r:
-            r = csv.writer(r, delimiter='\t')
+        with open('../Data/Extracted_features/'+fileName+'.npy', 'wb') as r:
+           
+            np.save(r, np.array(self.X))
             
-            r.writerow(self.names)
-            for row in self.X:
-                    r.writerow(row) 
         print "Saving done"     
     
     def print_X(self):
