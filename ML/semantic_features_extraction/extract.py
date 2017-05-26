@@ -3,7 +3,7 @@ Created on May 25, 2017
 
 @author: s163601
 '''
-from  Feature_extractor import Feature_extractor
+from Feature_extractor import Feature_extractor
 
 if __name__ == '__main__':
     pass
