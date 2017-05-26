@@ -3,6 +3,7 @@
 import csv
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
+import itertools
 
 '''
 Created on May 25, 2017
@@ -21,19 +22,21 @@ class Feature_extractor(object):
         Constructor
         '''
         
-    def get_contents(self):
+    def get_contents(self,fake):
         self.review_list = []
-        with open('../Data/YelpZip/reviewContent','rb') as tsvin:
-            tsvin = csv.reader(tsvin, delimiter='\t')
+
+        with open('../Data/YelpZip/reviewContent','rb') as reviews, open('../Data/YelpZip/metadata','rb') as metadatas:
+            reviews = csv.reader(reviews, delimiter='\t')
+            metadatas = csv.reader(metadatas, delimiter='\t')
          
-            for row in tsvin:
-                self.review_list.append(row[3])
+            for review,metadata in itertools.izip(reviews, metadatas):
+                if (metadata[3] == str(-fake)):
+                    self.review_list.append(review[3])
                          
         print "Get-Contents done"
 
     def vectorize(self,ngram):
-        vectorizer = CountVectorizer(min_df=0.01,ngram_range=(ngram,ngram),analyzer='word',stop_words='english',max_features=1000,token_pattern=r"(?u)\b[a-zA-Z]+'?[a-zA-Z]+\b",strip_accents='ascii')
-        vectorizer.stop_words += ''
+        vectorizer = CountVectorizer(max_df=0.95,min_df=10,ngram_range=(ngram,ngram),analyzer='word',stop_words='english',max_features=100,token_pattern=r"(?u)\b[a-zA-Z]+'?[a-zA-Z]+\b",strip_accents='ascii')
         
         self.X = vectorizer.fit_transform(self.review_list).toarray()
         self.names = vectorizer.get_feature_names()
@@ -46,7 +49,7 @@ class Feature_extractor(object):
         transformer = TfidfTransformer(smooth_idf=False)
         self.X = transformer.fit_transform(self.X).toarray()
         
-        print "Get-Contents done"
+        print "Transform done"
         self.print_X()
         
     def save(self, fileName):
