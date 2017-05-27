@@ -64,16 +64,35 @@ x_train=scaler.transform(x_train)
 x_test=scaler.transform(x_test)
 
 #classify
+weight={}
+weight[-1]=0.8
+weight[1]=0.2
 C = 1.0  # SVM regularization parameter
-svc = svm.SVC(kernel='linear', C=C).fit(x_train, y_train)
+svc = svm.SVC(kernel='linear', C=C,class_weight=weight).fit(x_train, y_train)
+rbf_svc = svm.SVC(kernel='rbf', gamma=0.7, C=C,class_weight=weight).fit(x_train, y_train)
+poly_svc = svm.SVC(kernel='poly', degree=3, C=C,class_weight=weight).fit(x_train, y_train)
+lin_svc = svm.LinearSVC(C=C,class_weight=weight).fit(x_train, y_train)
 
 #evaluate
-pred=svc.predict(x_test)
-acc_test=np.sum(pred==y_test)/float(num_test)*100
-#(p_test,r_test,f_test,s_test)=precision_recall_fscore_support(y_test,pred)
-pred=svc.predict(x_train)
-acc_train=np.sum(pred==y_train)/float(num_train)*100
-#[p_train,r_trainf_train,s_train]=precision_recall_fscore_support(y_train,pred)
-print('Trianing accuracy',acc_train)
-print('Testing accuracy',acc_test)
-# precision recall f1 score
+titles = ['SVC with linear kernel',
+          'LinearSVC (linear kernel)',
+          'SVC with RBF kernel',
+          'SVC with polynomial (degree 3) kernel']
+for i, clf in enumerate((svc, lin_svc, rbf_svc, poly_svc)):
+	print(titles[i])
+	pred=clf.predict(x_test)
+	acc_test=np.sum(pred==y_test)/float(num_test)*100
+	(p_test,r_test,f_test,s_test)=precision_recall_fscore_support(y_test,pred)
+	pred=clf.predict(x_train)
+	acc_train=np.sum(pred==y_train)/float(num_train)*100
+	(p_train,r_train,f_train,s_train)=precision_recall_fscore_support(y_train,pred)
+	print('---------------Training---------------')
+	print('Accuracy:\t%f'%(acc_train))
+	print('Precision:\t%f\t%f'%(p_train[0],p_train[1]))
+	print('Recall\t\t%f\t%f'%(r_train[0],r_train[1]))
+	print('F1 score:\t%f\t%f'%(f_train[0],f_train[1]))
+	print('---------------Testing---------------')
+	print('Accuracy:\t%f'%acc_test)
+	print('Precision:\t%f\t%f'%(p_test[0],p_test[1]))
+	print('Recall\t\t%f\t%f'%(r_test[0],r_test[1]))
+	print('F1 score:\t%f\t%f\n'%(f_test[0],f_test[1]))
