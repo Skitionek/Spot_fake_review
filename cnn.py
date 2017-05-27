@@ -22,7 +22,7 @@ def load(mode):
     real_x = np.load(f)
     f.close()
 
-    return fake_x, np.zeros(len(fake_x)), real_x, np.ones(len(real_x))
+    return fake_x, real_x
 
 
 class trainingModel:
@@ -31,7 +31,7 @@ class trainingModel:
             self.model = model
         else:
             # self.model = gaussian_process.GaussianProcessClassifier()
-            self.model = MLPClassifier(hidden_layer_sizes=(100, 100), alpha=1e-3, random_state=1)
+            self.model = MLPClassifier(hidden_layer_sizes=(100, 100), alpha=5e-3)
 
     def train(self, X, Y):
         self.model.fit(X, Y)
@@ -50,27 +50,39 @@ def main(mode):
     print("mode: ", sys.argv[1])
 
     # load
-    fake_x, fake_y, real_x, real_y = load(mode)
+    fake, real = load(mode)
+
+    # cross validation
+    fake_train, fake_test = train_test_split(fake, test_size=0.4, random_state=0)
+    real_train, real_test = train_test_split(real, test_size=0.4, random_state=0)
 
     # concatenate
-    X = np.concatenate((fake_x, real_x), axis=0)
-    Y = np.concatenate((fake_y, real_y), axis=0)
+    X_train = np.concatenate((fake_train, real_train),
+                             axis=0)
+    Y_train = np.concatenate((np.zeros(len(fake_train)),
+                              np.ones(len(real_train))), axis=0)
+
+    X_test = np.concatenate((fake_test, real_test), axis=0)
+    Y_test_fake = np.zeros(len(fake_test))
+    Y_test_real = np.ones(len(real_test))
+    Y_test = np.concatenate((Y_test_fake, Y_test_real), axis=0)
 
     print("test loaded")
 
-    # tra
+    # training model
     m = trainingModel()
-    # cross-validation?
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.4, random_state=0)
-
-    print("cross validated")
 
     # train
     m.train(X_train, Y_train)
 
     print("trained")
 
-    print("precision : ", m.validate(X_test, Y_test))
+    # validate
+    print("Overall precision : ", m.validate(X_test, Y_test))
+
+    print("Fake review precision: ", m.validate(fake_test, Y_test_fake))
+    print("Real review precision: ", m.validate(real_test, Y_test_real))
+
     return m
 
 
