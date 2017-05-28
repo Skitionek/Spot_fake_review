@@ -11,6 +11,7 @@ rate_file='rating_deviation.npy'
 user_file='user_prod_inburst.npy'
 bbr_file='BBR.npy'
 
+
 #load
 rate=np.load(data_fol+rate_file)
 user=np.load(data_fol+user_file)
