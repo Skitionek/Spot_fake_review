@@ -3,6 +3,11 @@ import matplotlib.pyplot as plt
 from sklearn import svm, datasets
 from sklearn import preprocessing
 from sklearn.metrics import precision_recall_fscore_support
+from sklearn.model_selection import StratifiedShuffleSplit
+from sklearn.model_selection import GridSearchCV
+
+
+
 #setting
 np.set_printoptions(threshold=np.nan)
 # file name
@@ -64,6 +69,7 @@ x_train=scaler.transform(x_train)
 x_test=scaler.transform(x_test)
 
 #classify
+print('Start classify')
 weight={}
 weight[-1]=0.8
 weight[1]=0.2
@@ -72,6 +78,18 @@ svc = svm.SVC(kernel='linear', C=C,class_weight=weight).fit(x_train, y_train)
 rbf_svc = svm.SVC(kernel='rbf', gamma=0.7, C=C,class_weight=weight).fit(x_train, y_train)
 poly_svc = svm.SVC(kernel='poly', degree=3, C=C,class_weight=weight).fit(x_train, y_train)
 lin_svc = svm.LinearSVC(C=C,class_weight=weight).fit(x_train, y_train)
+'''
+#Optimize SVM RBF
+C_range = np.logspace(-2, 10, 1)
+gamma_range = np.logspace(-9, 3, 1)
+param_grid = dict(gamma=gamma_range, C=C_range)
+cv = StratifiedShuffleSplit(n_splits=5, test_size=0.2, random_state=42)
+grid = GridSearchCV(svm.SVC(), param_grid=param_grid, cv=cv)
+grid.fit(x_train, y_train)
+
+print("The best parameters are %s with a score of %0.2f"
+      % (grid.best_params_, grid.best_score_))
+'''
 
 #evaluate
 titles = ['SVC with linear kernel',
@@ -89,10 +107,10 @@ for i, clf in enumerate((svc, lin_svc, rbf_svc, poly_svc)):
 	print('---------------Training---------------')
 	print('Accuracy:\t%f'%(acc_train))
 	print('Precision:\t%f\t%f'%(p_train[0],p_train[1]))
-	print('Recall\t\t%f\t%f'%(r_train[0],r_train[1]))
+	print('Recall:\t\t%f\t%f'%(r_train[0],r_train[1]))
 	print('F1 score:\t%f\t%f'%(f_train[0],f_train[1]))
 	print('---------------Testing---------------')
 	print('Accuracy:\t%f'%acc_test)
 	print('Precision:\t%f\t%f'%(p_test[0],p_test[1]))
-	print('Recall\t\t%f\t%f'%(r_test[0],r_test[1]))
+	print('Recall:\t\t%f\t%f'%(r_test[0],r_test[1]))
 	print('F1 score:\t%f\t%f\n'%(f_test[0],f_test[1]))
