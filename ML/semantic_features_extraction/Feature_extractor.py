@@ -1,16 +1,12 @@
-import csv
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
-
-try:
-    # Python 2
-    from itertools import izip
-except ImportError:
-    # Python 3
-    izip = zip
-
-
 import numpy as np
+
+import nltk
+from nltk import stem
+from nltk.corpus import stopwords
+
+
 
 '''
 Created on May 25, 2017
@@ -22,6 +18,10 @@ class Feature_extractor(object):
     '''
     classdocs
     '''
+    
+    stemmers = ['porter','wordnet','lancaster','snowball','isri','rslp','regexp']
+    stemmer = None
+    stemmer_name = None
 
     def __init__(self, verbose):
         self.verbose = verbose
@@ -34,10 +34,67 @@ class Feature_extractor(object):
                                              
         print("Get-Contents done ",len(self.review_list))
 
+    def setpreprocess(self,stemmer_idx):
+        self.stemmer_name = self.stemmers[stemmer_idx]
+        if (self.stemmers[stemmer_idx] == 'porter'):
+            self.stemmer = stem.PorterStemmer()
+        if (self.stemmers[stemmer_idx] == 'wordnet'):
+            self.stemmer = stem.WordNetLemmatizer()
+        if (self.stemmers[stemmer_idx] == 'lancaster'):
+            self.stemmer = stem.LancasterStemmer()
+        if (self.stemmers[stemmer_idx] == 'snowball'):
+            self.stemmer = stem.SnowballStemmer()
+        if (self.stemmers[stemmer_idx] == 'isri'):
+            self.stemmer = stem.ISRIStemmer()
+        if (self.stemmers[stemmer_idx] == 'rslp'):
+            self.stemmer = stem.RSLPStemmer()
+        if (self.stemmers[stemmer_idx] == 'regexp'):
+            self.stemmer = stem.RegexpStemmer()
+            
+
     def vectorize(self,ngram,feature_n):
-        self.vectorizer = CountVectorizer(max_df=0.95,min_df=10,ngram_range=(ngram,ngram),analyzer='word',stop_words='english',max_features=feature_n,token_pattern=r"(?u)\b[a-zA-Z]+'?[a-zA-Z]+\b",strip_accents='ascii')
+        if (self.stemmer == None):
+            self.vectorizer = CountVectorizer(max_df=0.95,min_df=10,ngram_range=(ngram,ngram),analyzer='word',stop_words='english',max_features=feature_n,token_pattern=r"(?u)\b[a-zA-Z]+'?[a-zA-Z]+\b",strip_accents='ascii')
+        else:
+            print("Preprocessing by: ",self.stemmer_name)
+#             analyzer = CountVectorizer().build_analyzer()
+            
+#             stop = set(stopwords.words('english'))
+#         
+#             if(self.stemmer_name == 'wordnet'):
+#                 def stemmed_words(doc):
+#                     return (self.stemmer.lemmatize(w) for w in analyzer(doc))
+#             else: 
+#                 def stemmed_words(doc):
+#                     return (self.stemmer.stem(w) for w not in stop for w in analyzer(doc))
+            
+            if(self.stemmer_name == 'wordnet'):
+                def stem_tokens(tokens, stemmer):
+                    stemmed = []
+                    for item in tokens:
+                        stemmed.append(stemmer.stem(item))
+                    return stemmed
+            else: 
+                def stem_tokens(tokens, stemmer):
+                    stemmed = []
+                    for item in tokens:
+                        stemmed.append(stemmer.stem(item))
+                    return stemmed
+                
+            def tokenize(text):
+                tokens = nltk.word_tokenize(text)
+                stems = stem_tokens(tokens, self.stemmer)
+                return stems
+            ######## 
+            
+            self.vectorizer = CountVectorizer(tokenizer=tokenize, max_df=0.95,min_df=10,ngram_range=(ngram,ngram),analyzer='word',stop_words='english',max_features=feature_n,token_pattern=r"(?u)\b[a-zA-Z]+'?[a-zA-Z]+\b",strip_accents='ascii')
+
+        
+        
         
         self.vectorizer.fit(self.review_list)
+        
+        print("Dictionary: ",self.vectorizer.get_feature_names())
         
         print("Vectorize done")
 

@@ -80,8 +80,8 @@ def main(mode):
     # validate
     print("Overall precision : ", m.validate(X_test, Y_test))
 
-    print("Fake review precision: ", m.validate(fake_test, Y_test_fake))
-    print("Real review precision: ", m.validate(real_test, Y_test_real))
+#     print("Fake review precision: ", m.validate(fake_test, Y_test_fake))
+#     print("Real review precision: ", m.validate(real_test, Y_test_real))
 
     return m
 
