@@ -30,16 +30,9 @@ class Feature_extractor(object):
         '''
         
     def get_contents(self,fake):
-        self.review_list = []
-
-        with open('../../Data/YelpZip/reviewContent','rt') as reviews, open('../../Data/YelpZip/metadata','rt') as metadatas:
-            reviews = csv.reader(reviews, delimiter='\t')
-            metadatas = csv.reader(metadatas, delimiter='\t')
-         
-            for review,metadata in izip(reviews, metadatas):
-                self.review_list.append(review[3])
-                         
-        print("Get-Contents done")
+        self.review_list = np.loadtxt('../../Data/YelpZip/reviewContent',usecols=3, dtype='string', delimiter='\t')
+                                             
+        print("Get-Contents done ",len(self.review_list))
 
     def vectorize(self,ngram,feature_n):
         self.vectorizer = CountVectorizer(max_df=0.95,min_df=10,ngram_range=(ngram,ngram),analyzer='word',stop_words='english',max_features=feature_n,token_pattern=r"(?u)\b[a-zA-Z]+'?[a-zA-Z]+\b",strip_accents='ascii')
