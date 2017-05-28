@@ -1,7 +1,6 @@
 import numpy as np
 import datetime
 from scipy.stats import gaussian_kde
-import peakutils as pu
 from scipy.signal import argrelextrema
 
 def kde_scipy(x, x_grid, bandwidth=0.2):
@@ -12,7 +11,7 @@ def kde_scipy(x, x_grid, bandwidth=0.2):
     kde = gaussian_kde(x, bw_method=bandwidth / x.std(ddof=1))
     return kde.evaluate(x_grid)
 
-read_file = np.loadtxt('data/metadata.txt', dtype=np.dtype("i4, i4, f4, i4, S10"))
+read_file = np.loadtxt('data/metadata', dtype=np.dtype("i4, i4, f4, i4, S10"))
 read_file_short = read_file
 
 data_list = []
@@ -72,22 +71,20 @@ for k in range(0,len(X)):
     else:
         bins_in_bursts.append(set())
 
-user_prod = []
-for row in read_file_short:
-    user_prod.append([row[0], row[1]])
 print("putting together user_prod_inburst...")
 user_prod_inburst = []
-for i in range(0,len(user_prod)):
-    user_id = user_prod[i][0]
-    product_id = user_prod[i][1]
+for i in range(0,len(data)):
+    user_id = data[i][0]
+    product_id = data[i][1]
+    time = data[i][2]
     row_0 = [row[0] for row in item_data[product_id]]
     bin_value = item_data_bin[product_id][row_0.index(user_id)]
-    is_in_burst = bin_value in bins_in_bursts[product_id]
-    user_prod_inburst.append([user_id,product_id, is_in_burst])
+    is_in_burst = bin_value in bins_in_bursts[product_id]   # returns true or false if bin_value is in set
+    user_prod_inburst.append([user_id,product_id, is_in_burst,time])
 
 user_prod_inburst = np.asarray(user_prod_inburst)
 user_prod_inburst = user_prod_inburst[user_prod_inburst[:, 0].argsort()]
-np.save("custom_data/user_prod_inburst",user_prod_inburst)
+np.save("custom_data/user_prod_inburst_date",user_prod_inburst)
 
 
 
