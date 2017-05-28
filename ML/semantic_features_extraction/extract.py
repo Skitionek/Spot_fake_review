@@ -15,9 +15,11 @@ if __name__ == '__main__':
     
     ext.get_contents(-1)
     ext.transform()
+    ext.tfidtransform()
     ext.save("Fake/unigram")
     ext.get_contents(1)
     ext.transform()
+    ext.tfidtransform()
     ext.save("notFake/unigram")
     
     ext.get_contents(0)
@@ -25,9 +27,11 @@ if __name__ == '__main__':
       
     ext.get_contents(-1)
     ext.transform()
+    ext.tfidtransform()
     ext.save("Fake/bigram")
     ext.get_contents(1)
     ext.transform()
+    ext.tfidtransform()
     ext.save("notFake/bigram")
     
     
@@ -36,7 +40,9 @@ if __name__ == '__main__':
 #     
 #     ext.get_contents(-1)
 #     ext.transform()
+#     ext.tfidtransform()
 #     ext.save("Fake/trigram")
 #     ext.get_contents(1)   
 #     ext.transform()
+#     ext.tfidtransform()
 #     ext.save("notFake/trigram")
