@@ -2,6 +2,13 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split
 import numpy as np
 import sys
+# from svm_behav import y_train
+
+
+
+import csv
+
+
 
 """
     cnn.py
@@ -10,19 +17,19 @@ import sys
 
 
 def getDir(dirname, mode):
-    return "./Data/Extracted_features/{0}/{1}.npy".format(dirname, mode)
+    return "./Data/Extracted_features/{1}.npy".format(dirname, mode)
 
 
 def load(mode):
-    f = open(getDir("Fake", mode))
+    f = open(getDir("", mode))
     fake_x = np.load(f)
     f.close()
 
-    f = open(getDir("notFake", mode))
-    real_x = np.load(f)
-    f.close()
+#     f = open(getDir("notFake", mode))
+#     real_x = np.load(f)
+#     f.close()
 
-    return fake_x, real_x
+    return fake_x
 
 
 class trainingModel:
@@ -50,22 +57,15 @@ def main(mode):
     print("mode: ", sys.argv[1])
 
     # load
-    fake, real = load(mode)
+    features = load(mode)
 
+
+    cla = np.loadtxt('Data/YelpZip/metadata',usecols=3, dtype='string', delimiter='\t')
+                
+    cla = np.array(cla)
+    
     # cross validation
-    fake_train, fake_test = train_test_split(fake, test_size=0.4, random_state=0)
-    real_train, real_test = train_test_split(real, test_size=0.4, random_state=0)
-
-    # concatenate
-    X_train = np.concatenate((fake_train, real_train),
-                             axis=0)
-    Y_train = np.concatenate((np.zeros(len(fake_train)),
-                              np.ones(len(real_train))), axis=0)
-
-    X_test = np.concatenate((fake_test, real_test), axis=0)
-    Y_test_fake = np.zeros(len(fake_test))
-    Y_test_real = np.ones(len(real_test))
-    Y_test = np.concatenate((Y_test_fake, Y_test_real), axis=0)
+    X_train, X_test, Y_train, Y_test = train_test_split(features, cla, test_size=0.4, random_state=0)
 
     print("test loaded")
 
