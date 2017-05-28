@@ -34,15 +34,15 @@ class trainingModel:
             self.model = MLPClassifier(hidden_layer_sizes=(100, 100), alpha=5e-3)
 
     def train(self, X, Y):
-        self.model.fit(X, Y)
+        print (self.model.fit(X, Y))
 
     def classify(self, X):
         return self.model.predict(X)
 
     def validate(self, X, Y):
-        result = self.classify(X)
+        return self.model.score(X, Y)
         # compare
-        return float(np.count_nonzero(result == Y)) / float(len(Y))
+        # return float(np.count_nonzero(result == Y)) / float(len(Y))
 
 
 def main(mode):
