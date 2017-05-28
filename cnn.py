@@ -34,7 +34,7 @@ class trainingModel:
             self.model = model
         else:
             # self.model = gaussian_process.GaussianProcessClassifier()
-            self.model = MLPClassifier(hidden_layer_sizes=(100, 100), alpha=5e-3)
+            self.model = MLPClassifier(hidden_layer_sizes=(100, 100), alpha=0.05)
 
     def train(self, X, Y):
         print (self.model.fit(X, Y))
