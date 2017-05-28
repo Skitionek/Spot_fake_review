@@ -16,18 +16,14 @@ import csv
 """
 
 
-def getDir(dirname, mode):
-    return "./Data/Extracted_features/{1}.npy".format(dirname, mode)
+def getDir(mode):
+    return "./Data/Extracted_features/{0}.npy".format(mode)
 
 
 def load(mode):
-    f = open(getDir("", mode))
+    f = open(getDir(mode))
     fake_x = np.load(f)
     f.close()
-
-#     f = open(getDir("notFake", mode))
-#     real_x = np.load(f)
-#     f.close()
 
     return fake_x
 
@@ -60,9 +56,9 @@ def main(mode):
     features = load(mode)
 
 
-    cla = np.loadtxt('Data/YelpZip/metadata',usecols=3, dtype='string', delimiter='\t')
+    cla = np.array(np.loadtxt('Data/YelpZip/metadata',usecols=[3], dtype='string', delimiter='\t'))
                 
-    cla = np.array(cla)
+    cla = (cla == '1')
     
     # cross validation
     X_train, X_test, Y_train, Y_test = train_test_split(features, cla, test_size=0.4, random_state=0)
@@ -79,6 +75,12 @@ def main(mode):
 
     # validate
     print("Overall precision : ", m.validate(X_test, Y_test))
+
+    # partition
+    fake_test = X_test[- Y_test]
+    Y_test_fake = np.array([False] * len(fake_test))
+    real_test = X_test[Y_test]
+    Y_test_real = np.array([True] * len(real_test))
 
     print("Fake review precision: ", m.validate(fake_test, Y_test_fake))
     print("Real review precision: ", m.validate(real_test, Y_test_real))

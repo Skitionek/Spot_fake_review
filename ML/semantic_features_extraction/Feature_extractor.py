@@ -30,7 +30,7 @@ class Feature_extractor(object):
         '''
         
     def get_contents(self,fake):
-        self.review_list = np.loadtxt('../../Data/YelpZip/reviewContent',usecols=3, dtype='string', delimiter='\t')
+        self.review_list = np.loadtxt('../../Data/YelpZip/reviewContent', usecols=[3], dtype='string', delimiter='\t')
                                              
         print("Get-Contents done ",len(self.review_list))
 
