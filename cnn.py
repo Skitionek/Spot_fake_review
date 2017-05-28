@@ -51,6 +51,19 @@ def main(mode):
                 
     cla = (cla == '1')
 
+    '''
+    Try equal number of entries
+    '''
+    # all_fake = features[- cla]
+    # all_real = features[cla]
+    #
+    # m = min(len(all_fake), len(all_real))
+    #
+    # features = np.concatenate((all_fake[:m], all_real[:m]), axis=0)
+    # cla = np.array([False] * m + [True] * m)
+    #
+    # assert(len(cla) == len(features))
+
     print("real: {0}\nfake: {1}\n".format(np.count_nonzero(cla), len(cla) - np.count_nonzero(cla)))
 
     print("test loaded")
