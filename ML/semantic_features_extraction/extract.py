@@ -10,28 +10,33 @@ if __name__ == '__main__':
 
     ext = Feature_extractor(0)
     
-    ext.get_contents(-1)
+    ext.get_contents(0)
     ext.vectorize(1)
+    
+    ext.get_contents(-1)
     ext.transform()
     ext.save("Fake/unigram")
-    
-    ext.vectorize(2)
-    ext.transform()
-    ext.save("Fake/bigram")
-    
-    ext.vectorize(3)
-    ext.transform()
-    ext.save("Fake/trigram")
-    
     ext.get_contents(1)
-    ext.vectorize(1)
     ext.transform()
     ext.save("notFake/unigram")
     
-    ext.vectorize(2)
+    ext.get_contents(0)
+    ext.vectorize(2)  
+      
+    ext.get_contents(-1)
+    ext.transform()
+    ext.save("Fake/bigram")
+    ext.get_contents(1)
     ext.transform()
     ext.save("notFake/bigram")
     
-    ext.vectorize(3)
-    ext.transform()
-    ext.save("notFake/trigram")
+    
+#     ext.get_contents(0)
+#     ext.vectorize(3)
+#     
+#     ext.get_contents(-1)
+#     ext.transform()
+#     ext.save("Fake/trigram")
+#     ext.get_contents(1)   
+#     ext.transform()
+#     ext.save("notFake/trigram")
