@@ -44,9 +44,13 @@ if __name__ == '__main__':
         
         print("Basic work done (can press ctrl-C) reaped analysis with pre-processing")
     
-    for i in range(7):
-        ext.setpreprocess(i)
-        analyze()
+        for i in range(7):
+            ext.setpreprocess(i)
+            analyze()
+    
+    
+    ext.setpreprocess(stemmer_idx)
+    analyze()
     
 #     ext.get_contents(0)
 #     ext.vectorize(3)
