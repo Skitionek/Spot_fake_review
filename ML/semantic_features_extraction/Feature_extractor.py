@@ -93,7 +93,7 @@ class Feature_extractor(object):
         
         
         
-        self.vectorizer.fit(self.review_list)
+        self.X = self.vectorizer.fit_transform(self.review_list)
         
         print("Dictionary: ",self.vectorizer.get_feature_names())
         

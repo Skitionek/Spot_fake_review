@@ -28,12 +28,12 @@ if __name__ == '__main__':
         
     def analyze ():
         ext.vectorize(1,feature_n)
-        ext.transform()
+#         ext.transform()
         #     ext.tfidtransform()
         ext.save("unigram")
         
         ext.vectorize(2,feature_n)  
-        ext.transform()
+#         ext.transform()
         #     ext.tfidtransform()
         ext.save("bigram")  
             
