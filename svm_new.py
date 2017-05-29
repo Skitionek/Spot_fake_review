@@ -42,8 +42,13 @@ features1 = load('unigram')
 features2 = load('behav_feature')
 features=features1
 
-Y=np.load('./Data/label.npy')
-Y=(Y==1)
+cla = np.array(np.loadtxt('Data/YelpZip/metadata',usecols=[3], dtype='string', delimiter='\t'))
+                
+cla = (cla == '1')
+
+'''
+Try equal number of entries
+'''
 all_fake = features[- cla]
 all_real = features[cla]
 
@@ -51,6 +56,7 @@ m = min(len(all_fake), len(all_real))
 m = 40000
 features = np.concatenate((all_fake[:m], all_real[:m]), axis=0)
 cla = np.array([False] * m + [True] * m)
+Y=cla
 assert(len(cla) == len(features))
 
 x_train, x_test, y_train, y_test = train_test_split(features, Y, test_size=0.33, random_state=42)
@@ -59,7 +65,7 @@ x_train, x_test, y_train, y_test = train_test_split(features, Y, test_size=0.33,
 #classify
 print('Start classify')
 weight={}
-weight[-1]=0.8
+weight[0]=0.8
 weight[1]=0.2
 C = 1.0  # SVM regularization parameter
 #svc = svm.SVC(kernel='linear', C=C,class_weight=weight).fit(x_train, y_train)
