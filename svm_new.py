@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
  
 
 def getDir(mode):
-    return "./{0}.npy".format(mode)
+    return "./Data/Extracted_features/{0}.npy".format(mode)
 
 
 def load(mode):
@@ -19,28 +19,9 @@ def load(mode):
 
     return fake_x
 
-
-class trainingModel:
-    def __init__(self, model=None):
-        if model:
-            self.model = model
-        else:
-            # self.model = gaussian_process.GaussianProcessClassifier()
-            self.model = MLPClassifier(hidden_layer_sizes=(100, 100), alpha=0.05)
-
-    def train(self, X, Y):
-        print (self.model.fit(X, Y))
-
-    def classify(self, X):
-        return self.model.predict(X)
-
-    def validate(self, X, idx):
-        data = self.model.predict_proba(X)[:, idx]
-        return np.mean(self.model.predict(X)), np.mean(data), np.std(data)
-
-features1 = load('unigram')
+features1 = load('porter_unigram')
 features2 = load('behav_feature')
-features=features1
+features=np.concatenate((features1, features2), axis=1)
 
 cla = np.array(np.loadtxt('Data/YelpZip/metadata',usecols=[3], dtype='string', delimiter='\t'))
                 
@@ -92,10 +73,10 @@ titles = ['LinearSVC (linear kernel)',
 for i, clf in enumerate(( lin_svc, rbf_svc, poly_svc)):
 	print(titles[i])
 	pred=clf.predict(x_test)
-	acc_test=np.sum(pred==y_test)/float(num_test)*100
+	acc_test=np.sum(pred==y_test)/float(len(y_test))*100
 	(p_test,r_test,f_test,s_test)=precision_recall_fscore_support(y_test,pred)
 	pred=clf.predict(x_train)
-	acc_train=np.sum(pred==y_train)/float(num_train)*100
+	acc_train=np.sum(pred==y_train)/float(len(y_train))*100
 	(p_train,r_train,f_train,s_train)=precision_recall_fscore_support(y_train,pred)
 	print('---------------Training---------------')
 	print('Accuracy:\t%f'%(acc_train))

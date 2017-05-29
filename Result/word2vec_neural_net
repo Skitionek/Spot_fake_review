@@ -1,0 +1,61 @@
+[Chitphentom:...70 Machine Learning/project]$ python cnn.py word2vec                                                                                                 (master✱)
+mode: word2vec
+real: 80466
+fake: 80466
+
+test loaded
+MLPClassifier(activation='relu', alpha=0.05, batch_size='auto', beta_1=0.9,
+       beta_2=0.999, early_stopping=False, epsilon=1e-08,
+       hidden_layer_sizes=(100, 100), learning_rate='constant',
+       learning_rate_init=0.001, max_iter=300, momentum=0.9,
+       nesterovs_momentum=True, power_t=0.5, random_state=None,
+       shuffle=True, solver='adam', tol=0.0001, validation_fraction=0.1,
+       verbose=False, warm_start=False)
+trained
+Score: 0.643562818442
+Fake review (precision, prob, sd): (0.69734062383496953, 0.5811325111604192, 0.16457004356006807)
+Real review (precision, prob, sd): (0.58978501304834097, 0.53888967229772011, 0.17557664242263218)
+MLPClassifier(activation='relu', alpha=0.05, batch_size='auto', beta_1=0.9,
+       beta_2=0.999, early_stopping=False, epsilon=1e-08,
+       hidden_layer_sizes=(100, 100), learning_rate='constant',
+       learning_rate_init=0.001, max_iter=300, momentum=0.9,
+       nesterovs_momentum=True, power_t=0.5, random_state=None,
+       shuffle=True, solver='adam', tol=0.0001, validation_fraction=0.1,
+       verbose=False, warm_start=False)
+trained
+Score: 0.651711924439
+Fake review (precision, prob, sd): (0.62368731746722172, 0.55375899960364683, 0.17879398294274007)
+Real review (precision, prob, sd): (0.67973653141117252, 0.58348582278308536, 0.17970897738339681)
+MLPClassifier(activation='relu', alpha=0.05, batch_size='auto', beta_1=0.9,
+       beta_2=0.999, early_stopping=False, epsilon=1e-08,
+       hidden_layer_sizes=(100, 100), learning_rate='constant',
+       learning_rate_init=0.001, max_iter=300, momentum=0.9,
+       nesterovs_momentum=True, power_t=0.5, random_state=None,
+       shuffle=True, solver='adam', tol=0.0001, validation_fraction=0.1,
+       verbose=False, warm_start=False)
+trained
+Score: 0.6454048344
+Fake review (precision, prob, sd): (0.66699807369663833, 0.56193910248410606, 0.16127455913562036)
+Real review (precision, prob, sd): (0.62381159510346118, 0.56095821568227522, 0.16906408937760459)
+MLPClassifier(activation='relu', alpha=0.05, batch_size='auto', beta_1=0.9,
+       beta_2=0.999, early_stopping=False, epsilon=1e-08,
+       hidden_layer_sizes=(100, 100), learning_rate='constant',
+       learning_rate_init=0.001, max_iter=300, momentum=0.9,
+       nesterovs_momentum=True, power_t=0.5, random_state=None,
+       shuffle=True, solver='adam', tol=0.0001, validation_fraction=0.1,
+       verbose=False, warm_start=False)
+trained
+Score: 0.657366556888
+Fake review (precision, prob, sd): (0.77145342695581931, 0.62070779206934701, 0.1546702319059117)
+Real review (precision, prob, sd): (0.54327968682035666, 0.51065148659449866, 0.16835045716195332)
+MLPClassifier(activation='relu', alpha=0.05, batch_size='auto', beta_1=0.9,
+       beta_2=0.999, early_stopping=False, epsilon=1e-08,
+       hidden_layer_sizes=(100, 100), learning_rate='constant',
+       learning_rate_init=0.001, max_iter=300, momentum=0.9,
+       nesterovs_momentum=True, power_t=0.5, random_state=None,
+       shuffle=True, solver='adam', tol=0.0001, validation_fraction=0.1,
+       verbose=False, warm_start=False)
+trained
+Score: 0.626079661965
+Fake review (precision, prob, sd): (0.72851550363512085, 0.59988356638235441, 0.15962040616955503)
+Real review (precision, prob, sd): (0.52364382029453804, 0.50576429140097423, 0.1712005546148975)
