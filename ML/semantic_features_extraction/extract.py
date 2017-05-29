@@ -1,4 +1,5 @@
 import sys
+
 '''
 Created on May 25, 2017
 
@@ -15,21 +16,37 @@ if __name__ == '__main__':
         feature_n = 1000
         pass
     
-    print("Number of features: ",feature_n," \nTIP: you can pass number of features by argument.")
-        
+    try:
+        stemmer_idx = int(sys.argv[2].strip())
+    except: 
+        stemmer_idx = None
+        pass
+    
+    
     ext = Feature_extractor(0)
-    
     ext.get_contents(0)
-    ext.vectorize(1,feature_n)
-    ext.transform()
-#     ext.tfidtransform()
-    ext.save("unigram")
-
-    ext.vectorize(2,feature_n)  
-    ext.transform()
-#     ext.tfidtransform()
-    ext.save("bigram")
+        
+    def analyze ():
+        ext.vectorize(1,feature_n)
+        ext.transform()
+        #     ext.tfidtransform()
+        ext.save("unigram")
+        
+        ext.vectorize(2,feature_n)  
+        ext.transform()
+        #     ext.tfidtransform()
+        ext.save("bigram")  
+            
+    if (stemmer_idx == None):
+        print("Number of features: ",feature_n," \nTIP: you can pass number of features and stemmer index by arguments.")
+             
+        analyze()
+        
+        print("Basic work done (can press ctrl-C) reaped analysis with pre-processing")
     
+    for i in range(7):
+        ext.setpreprocess(i)
+        analyze()
     
 #     ext.get_contents(0)
 #     ext.vectorize(3)
