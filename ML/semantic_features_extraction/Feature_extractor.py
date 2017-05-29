@@ -44,7 +44,7 @@ class Feature_extractor(object):
         if (self.stemmers[stemmer_idx] == 'lancaster'):
             self.stemmer = stem.LancasterStemmer()
         if (self.stemmers[stemmer_idx] == 'snowball'):
-            self.stemmer = stem.SnowballStemmer()
+            self.stemmer = stem.SnowballStemmer("english", ignore_stopwords=True)
         if (self.stemmers[stemmer_idx] == 'isri'):
             self.stemmer = stem.ISRIStemmer()
         if (self.stemmers[stemmer_idx] == 'rslp'):
@@ -73,7 +73,7 @@ class Feature_extractor(object):
                 def stem_tokens(tokens, stemmer):
                     stemmed = []
                     for item in tokens:
-                        stemmed.append(stemmer.stem(item))
+                        stemmed.append(stemmer.lemmatize(item))
                     return stemmed
             else: 
                 def stem_tokens(tokens, stemmer):
@@ -93,7 +93,7 @@ class Feature_extractor(object):
         
         
         
-        self.vectorizer.fit(self.review_list)
+        self.X = self.vectorizer.fit_transform(self.review_list)
         
         print("Dictionary: ",self.vectorizer.get_feature_names())
         
