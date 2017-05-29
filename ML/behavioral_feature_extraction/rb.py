@@ -29,20 +29,20 @@ user_dates_split = np.empty(0)
 user_dates_split = np.append(user_dates_split, np.split(user_dates, np.where(np.diff(user_dates[:,0]))[0]+1))
 burst_user_set = set(user_dates[:,0])
 
-dist_lambda = 61
-dist = 0
+dist_lambda = 61.0
+dist = 0.0
 
 rb_values = []
 for i in range(0,len(user_dates_split)):
     user_dates_split[i] = user_dates_split[i][user_dates_split[i][:, 1].argsort()]
     l = len(user_dates_split[i])
-    rb = 0
+    rb = 0.0
     if l > 1:
         dist = (user_dates_split[i][l - 1][1] - user_dates_split[i][0][1]).days
         if dist > dist_lambda:
-            rb = 0
+            rb = 0.0
         else:
-            rb = 1 - (dist / dist_lambda)
+            rb = 1.0 - (dist / dist_lambda)
     rb_values.append([user_dates_split[i][0][0], dist, rb, l])
 
 rb_array = np.asarray(rb_values)
