@@ -1,0 +1,36 @@
+[Chitphentom:...70 Machine Learning/project]$ python cnn.py unigram                                                                                                  (master✱) 
+mode: unigram
+real: 80466
+fake: 80466
+
+test loaded
+MLPClassifier(activation='relu', alpha=0.05, batch_size='auto', beta_1=0.9,
+       beta_2=0.999, early_stopping=False, epsilon=1e-08,
+       hidden_layer_sizes=(100, 100), learning_rate='constant',
+       learning_rate_init=0.001, max_iter=200, momentum=0.9,
+       nesterovs_momentum=True, power_t=0.5, random_state=None,
+       shuffle=True, solver='adam', tol=0.0001, validation_fraction=0.1,
+       verbose=False, warm_start=False)
+trained
+Fake review (precision, prob, sd): (0.60748639176795161, 0.54414272224885951, 0.25640024541337275)
+Real review (precision, prob, sd): (0.61464469465364258, 0.60141623362058816, 0.27595173157014358)
+MLPClassifier(activation='relu', alpha=0.05, batch_size='auto', beta_1=0.9,
+       beta_2=0.999, early_stopping=False, epsilon=1e-08,
+       hidden_layer_sizes=(100, 100), learning_rate='constant',
+       learning_rate_init=0.001, max_iter=200, momentum=0.9,
+       nesterovs_momentum=True, power_t=0.5, random_state=None,
+       shuffle=True, solver='adam', tol=0.0001, validation_fraction=0.1,
+       verbose=False, warm_start=False)
+trained
+Fake review (precision, prob, sd): (0.68063529938110512, 0.59066232613336533, 0.23781286516925954)
+Real review (precision, prob, sd): (0.53553053463574674, 0.54407848865974706, 0.26121897399996974)
+MLPClassifier(activation='relu', alpha=0.05, batch_size='auto', beta_1=0.9,
+       beta_2=0.999, early_stopping=False, epsilon=1e-08,
+       hidden_layer_sizes=(100, 100), learning_rate='constant',
+       learning_rate_init=0.001, max_iter=200, momentum=0.9,
+       nesterovs_momentum=True, power_t=0.5, random_state=None,
+       shuffle=True, solver='adam', tol=0.0001, validation_fraction=0.1,
+       verbose=False, warm_start=False)
+trained
+Fake review (precision, prob, sd): (0.6479009768100813, 0.5739904762014677, 0.23880530770446293)
+Real review (precision, prob, sd): (0.56505853403922157, 0.55691561867921469, 0.26300213554230922)
