@@ -7,6 +7,7 @@ from nltk import stem
 from nltk.corpus import stopwords
 
 
+import os
 
 '''
 Created on May 25, 2017
@@ -112,7 +113,16 @@ class Feature_extractor(object):
 #         self.print_X()
         
     def save(self, fileName):
-        with open('../../Data/Extracted_features/'+fileName+'.npy', 'wb') as r:
+        dir = '../../Data/Extracted_features/'
+        if (self.stemmer_name == None):
+            dir+="nopreprocessing/"
+        else:
+            dir+=self.stemmer_name+"/"
+        
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+
+        with open(dir+fileName+'.npy', 'wb') as r:
            
             np.save(r, np.array(self.X))
             
